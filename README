@@ -1,0 +1,83 @@
+
+<h1>Splunk SIEM Home Lab</h1>
+This tutorial outlines the implementation of Splunk SIEM within Azure Virtual Machines.<br />
+
+
+<h2>How to:</h2>
+Install and Analysis
+
+
+<h2>Environments and Technologies Used</h2>
+
+- Microsoft Azure
+- Splunk Enterprise
+
+<h2>Operating Systems Used </h2>
+
+- Windows Server 2022
+- Windows 10 (21H2)
+
+<h2>Stages</h2>
+
+- Setup Azure VM
+- Install Splunk
+- Dataset Analysis
+
+<h2>Steps</h2>
+
+
+<p>
+<h2>Stage 1: Setup Azure VM</h2>
+
+Step 1: Sign into Azure and create a resource group to house your Virtual Machine.
+
+Step 2: Create a virtual machine. Give it a name and select the corresponding region of your resource greoup. Click Image and choose Windows 10 and for Size select the desired CPU specifications.Create a username and password for the administrator account. Check the box called licensing; then click 'Review + Create". Last, click 'Create'.
+
+![](media/STEP%202%20-%20DC%20NIC.png)
+
+Step 3: Connect to your VM using your preferred Remote Desktop application. 
+
+Step 4: Since port 3389 will be open, configure the Network Securiy Group for your virtual machine to only allow RDP traffic from your local IP address.
+
+![](media/STEP%203%20-%20ENABLE%20ICMP.png)
+
+</p>
+<br />
+
+
+<p>
+<h2>Stage 2: Install Splunk</h2>
+
+Step 4: Once inside your Windows 10 machine, open a web browser and navigate the Splunk's official website.  install the free trial of Splunk Enterprise.
+
+![](media/STEP%204%20-%20ADDS.png)
+
+Step 5: Additionally, install the Splunk Security Essentials app.
+
+Step 6: Restart DC VM and reconnect to it using the new user just created (new forest).
+
+</p>
+<br />
+
+
+<p>
+<h2>Stage 3: Dataset Analysis</h2>
+
+Step 7: In ADUC (Active Directory Users and Computers) and create 2 OU’s (Organizational Unit), one called “Employees”, the second called “Admins”.
+
+![](media/STEP%207%20-%20OU.png)
+
+Step 8: Create a new user in Employees and add to the ‘Domain Admins’ Security Group. Log out of DC VM and log back in as this new user.
+
+![](media/STEP%208%20-%20DOMAIN%20ADMINS.png)
+
+Step 9: Set Client VM’s DNS settings to the DC’s VM Private IP address; then restart Client VM. Log back into Client VM as admin and join it to the DC’s IP address. Drag Client VM into the OU named “Clients”.
+
+![](media/STEP%209%20-%20DNS.png)
+
+Step 10: In Client VM, using your created user open up system properties. Allow ‘Domain Users’ access to remote desktop. 
+
+Step 11: In DC VM, as your admin created user, open Powershell (as an administrator) to create additional users.
+
+</p>
+<br />
