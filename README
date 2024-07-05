@@ -102,7 +102,9 @@ Explore different use cases depending on the dataset you are using to simulate n
 
 Some popular detection rules:
 - Multiple Failed Logins - Detect multiple failed login attempts within a short time frame from a single source IP. Here a bad actor may be trying to get into an account they don't have authorization to access.
+
 - Brute Force Attack - Look for repeated login failures across multiple accounts within a specific time window. By looking for aggressive relentless account login attempts, you can detect unauthorized individuals leveraging technology to try to break into an account. They will try many different credential combinations over and over again.
+
 - Inbound Suspicious Traffic - Look for unexpected incoming traffic from suspicious IP addresses or geolocation. Identifying any abnormal incoming traffic could be a sign of an attempt at a Denial of Service (DoS) attack.
 
 </p>
