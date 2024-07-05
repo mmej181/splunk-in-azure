@@ -4,7 +4,7 @@ This tutorial outlines the implementation of Splunk SIEM within Azure Virtual Ma
 
 
 <h2>How to:</h2>
-Install and Analysis
+Install and Analyze
 
 
 <h2>Environments and Technologies Used</h2>
