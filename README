@@ -15,12 +15,13 @@ Install and Analysis
 <h2>Operating Systems Used </h2>
 
 - Windows Server 2022
-- Windows 10 (21H2)
+- Windows 10 (22H2)
 
 <h2>Stages</h2>
 
 - Setup Azure VM
 - Install Splunk
+- Ingest Data
 - Dataset Analysis
 
 <h2>Steps</h2>
@@ -31,15 +32,16 @@ Install and Analysis
 
 Step 1: Sign into Azure and create a resource group to house your Virtual Machine.
 
-Step 2: Create a virtual machine. Give it a name and select the corresponding region of your resource greoup. Click Image and choose Windows 10 and for Size select the desired CPU specifications.Create a username and password for the administrator account. Check the box called licensing; then click 'Review + Create". Last, click 'Create'.
-
+Step 2: Create a virtual machine with the following details. You may need to select the Region that makes sense for where you are located.
 ![](media/STEP%202%20-%20DC%20NIC.png)
 
-Step 3: Connect to your VM using your preferred Remote Desktop application. 
+Step 3: Take note of the Administrator account login details (you will need it when access the virtual machine through your RDP application). Also, make sure that the only inbound ports that are open are RDP (3389).
 
-Step 4: Since port 3389 will be open, configure the Network Securiy Group for your virtual machine to only allow RDP traffic from your local IP address.
+Step 4: Wait for deployment of your virtual machine to finish.
 
 ![](media/STEP%203%20-%20ENABLE%20ICMP.png)
+
+Step 5: In the Network Settings of your VM, ensure that the source selected is 'My IP address' so you can access the virtual machine from your computer. Additionally, select RDP for the Service option since we will be using port 3389 to RDP into the virtual machine.
 
 </p>
 <br />
@@ -48,36 +50,60 @@ Step 4: Since port 3389 will be open, configure the Network Securiy Group for yo
 <p>
 <h2>Stage 2: Install Splunk</h2>
 
-Step 4: Once inside your Windows 10 machine, open a web browser and navigate the Splunk's official website.  install the free trial of Splunk Enterprise.
+Step 6: Once inside your Windows 10 machine, open a web browser and navigate the Splunk's official website.  Install the free trial of Splunk Enterprise.
 
 ![](media/STEP%204%20-%20ADDS.png)
 
-Step 5: Additionally, install the Splunk Security Essentials app.
+Step 7: Choose the installation package that corresponds to your machine.
 
-Step 6: Restart DC VM and reconnect to it using the new user just created (new forest).
+Step 8: Run Setup Wizard to get Splunk Enterprise on your computer.
+
+Step 9: Download Splunk Security Essentials App.
 
 </p>
 <br />
 
-
 <p>
-<h2>Stage 3: Dataset Analysis</h2>
+<h2>Stage 3: Ingest Data</h2>
 
-Step 7: In ADUC (Active Directory Users and Computers) and create 2 OU’s (Organizational Unit), one called “Employees”, the second called “Admins”.
-
+Step 10: To ingest data, select Apps at the top of the screen and then click 'Manage Apps'.
 ![](media/STEP%207%20-%20OU.png)
 
-Step 8: Create a new user in Employees and add to the ‘Domain Admins’ Security Group. Log out of DC VM and log back in as this new user.
+Step 11: In Apps, locate Splunk Security Essentials and under the Actions tab, select 'Launch app'.
 
 ![](media/STEP%208%20-%20DOMAIN%20ADMINS.png)
 
-Step 9: Set Client VM’s DNS settings to the DC’s VM Private IP address; then restart Client VM. Log back into Client VM as admin and join it to the DC’s IP address. Drag Client VM into the OU named “Clients”.
+Step 12: Wait for Configuration to show green like this.
 
 ![](media/STEP%209%20-%20DNS.png)
 
-Step 10: In Client VM, using your created user open up system properties. Allow ‘Domain Users’ access to remote desktop. 
+Step 13: Once configuration is completed, navigate back to the home page and select 'Add data' under Common tasks.
 
-Step 11: In DC VM, as your admin created user, open Powershell (as an administrator) to create additional users.
+Step 14: Step 14 - Choose to Install App From File.
+
+Step 15: On the left side select 'Files & Directories'. Then select the file or directory where the file is located.
+
+</p>
+
+<p>
+<h2>Stage 4: Dataset Analysis</h2>
+
+Here is an example of what datasets will look like once they are successfully imported.
+
+Step 16: This is a look at the formatting of the BOTS V2 Dataset once ingested in Splunk.
+
+![](media/STEP%207%20-%20OU.png)
+
+Step 17: And here is a larger dataset of attacks.
+
+![](media/STEP%208%20-%20DOMAIN%20ADMINS.png)
+
+Explore different use cases depending on the dataset you are using to simulate network traffic. Run queries to find specific types of data including information pertaining to relevant keywords such as 'login', 'failure', 'inbound', etc. One method is to look for conditions such as a count of login attempts (typically 3). Another way of finding abnormal activity is by looking at the timestamps of requests to see how often a request is coming in. If it looks like it is too fast to be coming from a human, then that should raise an eyebrow.
+
+Some popular detection rules:
+- Multiple Failed Logins - Detect multiple failed login attempts within a short time frame from a single source IP. Here a bad actor may be trying to get into an account they don't have authorization to access.
+- Brute Force Attack - Look for repeated login failures across multiple accounts within a specific time window. By looking for aggressive relentless account login attempts, you can detect unauthorized individuals leveraging technology to try to break into an account. They will try many different credential combinations over and over again.
+- Inbound Suspicious Traffic - Look for unexpected incoming traffic from suspicious IP addresses or geolocation. Identifying any abnormal incoming traffic could be a sign of an attempt at a Denial of Service (DoS) attack.
 
 </p>
 <br />
