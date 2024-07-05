@@ -85,7 +85,7 @@ Step 10: To ingest data, select Apps at the top of the screen and then click 'Ma
 
 Step 11: In Apps, locate Splunk Security Essentials and under the Actions tab, select 'Launch app'.
 
-![](media/STEP%2011%20-%20LAUNCH%20DOMAINS.png)
+![](media/STEP%2011%20-%20LAUNCH%20APP.png)
 
 Step 12: Wait for Configuration to show green like this.
 
