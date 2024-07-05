@@ -23,7 +23,9 @@ Install and Analyze
 - Install Splunk
 - Ingest Data
 - Dataset Analysis
-
+ 
+ 
+ 
 <h2>Steps</h2>
 
 
